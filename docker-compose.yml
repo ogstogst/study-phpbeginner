@@ -1,0 +1,39 @@
+# 変更したら、docker-compose down -> docker-compose up で変更を反映させる
+# 自由に設定できるポート番号は、49152から65535
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./php.ini:/usr/local/etc/php/php.ini
+      - .:/var/www/html
+    command: apache2-foreground
+    ports:
+      - 49150:80
+      - 9001:9001  # Xdebugのクライアントポート
+    depends_on:
+      - db
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+      - PMA_USER=user
+      - PMA_PASSWORD=password
+    ports:
+      - 49151:80
+    volumes:
+      - ./phpmyadmin/sessions:/sessions
+volumes:
+  db_data:
