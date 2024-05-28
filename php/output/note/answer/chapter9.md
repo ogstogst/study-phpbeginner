@@ -37,8 +37,23 @@ B
 - header()関数
 
 # 7
+C
 ## points
+- is_readable()
+- is_writable()
+- file_exists()
+
 # 8
+D
 ## points
+- ファイルのエラー処理
+
 # 9
+C
 ## points
+- ディレクトリトラバーサルの脆弱性
+- realpath()関数
+- $_FILE配列
+- Nullバイト
+- バイナリセーフ
+- umask()関数
