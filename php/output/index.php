@@ -1,9 +1,6 @@
 <?php
-$file = fopen('foods.txt', 'rb');
+$now = new DateTime();
+print $now->format('Y-m-d H:i:s');
 
-for ($line = fgets($file); !feof($file); $lines = fgets($file)) {
-  $line = trim($line);
-  print "<h1>" . $line . "</h1>";
-}
-
-fclose($file);
+$transport = Swift_SmtpTransport::newInstance('mailsv.example.com', 25);
+$mailer = Swift_Mailer::newInstance($transport);
